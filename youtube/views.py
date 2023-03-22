@@ -2,7 +2,6 @@ from django.shortcuts import render
 from pytube import YouTube
 import moviepy.editor as mp
 import os
-import re
 
 
 def home(request):
@@ -33,23 +32,20 @@ def downloads_music(request):
             try:
                 yt = YouTube(url)
                 audio_stream = yt.streams.filter(only_audio=True).first()
-                # audio_stream = yt.streams.get_audio_only()
                 if audio_stream:
-                    audio_path = audio_stream.download()
-                    for file in os.listdir(audio_path):
-                        if re.search('mp4', file):
-                            mp4_path = os.path.join(audio_path, file)
-                            mp3_path = os.path.join(
-                                audio_path, os.path.splitext(file)[0] + '.mp3')
-                            audio_clip = mp.AudioFileClip(mp4_path)
-                            audio_clip.write_audiofile(mp3_path)
-                            os.remove(mp4_path)
-                    return render(request, 'downloads/music.html', {'success': True})
+                    downloads_path = os.path.expanduser("~/Downloads")
+                    file_path = audio_stream.download(
+                        output_path=downloads_path)
+                    mp3_path = os.path.splitext(file_path)[0] + '.mp3'
+                    with mp.AudioFileClip(file_path) as audio_clip:
+                        audio_clip.write_audiofile(mp3_path)
+                    os.remove(file_path)
+                    return render(request, 'downloads/music.html', {'msg': 'Música baixada!'})
                 else:
-                    return render(request, 'downloads/music.html', {'msg': 'O vídeo não tem audio!'})
-            except Exception as ec:
-                return render(request, 'downloads/music.html', {'msg': str(ec)})
+                    return render(request, 'downloads/music.html', {'msg': 'O vídeo não tem áudio!'})
+            except Exception as e:
+                return render(request, 'downloads/music.html', {'msg': 'Não foi possível baixar o áudio!'})
         else:
-            return render(request, 'downloads/music.html', {'msg': 'Insira uma url Válida!'})
+            return render(request, 'downloads/music.html', {'msg': 'Insira uma URL válida!'})
     else:
         return render(request, 'downloads/music.html', {})
