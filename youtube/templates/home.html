@@ -1,17 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bxYoutube</title>
+    <link rel="stylesheet" href="/youtube/static/css/style_home.css">
 </head>
 <body>
-    <li class="nav-item">
-        <a class="navbar-brand" href="{% url 'music' %}">Downloads Music</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'video' %}">Downloads Vídeo</a>
-    </li>
+    <center class="center">
+    <div >
+        <figure class="card">
+            <a href="{% url 'video' %}">
+                <img src="/youtube/static/icons/video.png" height="140px" alt="Vídeo">
+            </a>
+        </figure>
+        <figure class="card">
+            <a href="{% url 'music' %}">
+                <img src="/youtube/static/icons/music.png" height="140" alt="Música">
+            </a>
+        </figure>
+    </div>
+    </center>
 </body>
 </html>
+{% endblock %}

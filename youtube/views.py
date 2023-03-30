@@ -7,7 +7,6 @@ import os
 def home(request):
     return render(request, 'home.html', {})
 
-
 def downloads_video(request):
     if request.method == "POST":
         try:
@@ -34,8 +33,7 @@ def downloads_music(request):
                 audio_stream = yt.streams.filter(only_audio=True).first()
                 if audio_stream:
                     downloads_path = os.path.expanduser("~/Downloads")
-                    file_path = audio_stream.download(
-                        output_path=downloads_path)
+                    file_path = audio_stream.download(output_path=downloads_path)
                     mp3_path = os.path.splitext(file_path)[0] + '.mp3'
                     with mp.AudioFileClip(file_path) as audio_clip:
                         audio_clip.write_audiofile(mp3_path)
