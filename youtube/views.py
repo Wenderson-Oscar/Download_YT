@@ -19,10 +19,9 @@ def downloads_video(request):
             os.path.join(downloads_path, file_name)
             return render(request, 'downloads/video.html', {'msg': 'Vídeo Baixado'})
         except:
-            return render(request, 'downloads/video.html', {'msg': 'Não foi Possivel baixa o Vídeo '})
+            return render(request, 'downloads/video.html', {'msg': 'Não foi Possível baixa o Vídeo '})
     else:
         return render(request, 'downloads/video.html', {})
-
 
 def downloads_music(request):
     if request.method == "POST":
