@@ -1,9 +1,19 @@
+.center {
+  display: flex;
+  position: fixed;
+  text-align: center;
+  margin-left: 28%;
+}
 figure {
     display: inline-block;
 }
 .card {
+  display: flex;
+  text-align: center;
+  flex-wrap: wrap;
   width: 190px;
   height: 254px;
+  margin-top: 20%;
   border-radius: 30px;
   background: #e0e0e0;
   display: flex;
